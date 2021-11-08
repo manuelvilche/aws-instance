@@ -25,6 +25,7 @@ app.post('/restart-instance', async (req, res) => {
 	const { instanceId, hash } = req.body;
 	console.log('body:', req.body);
 	logger.info(req.body);
+	logger.info(process.env)
 
 	if(!process.env.HASH || process.env.HASH !== hash)
 		return res.status(403).send('Invalid credentials');
