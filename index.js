@@ -8,7 +8,7 @@ const logger = require('lllog')();
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Set the region
-AWS.config.update({region: 'REGION'});
+// AWS.config.update({region: 'REGION'});
 
 const packageInfo = require('./package.json');
 
