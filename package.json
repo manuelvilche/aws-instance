@@ -1,0 +1,40 @@
+{
+  "name": "astreobot-plugin-telegram-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "start-dev": "nodemon index.js",
+    "start": "node index.js",
+    "lint": "eslint ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manuelvilche/astreobot-plugin-telegram-bot.git"
+  },
+  "author": "Janis",
+  "license": "ISC",
+  "homepage": "https://github.com/manuelvilche/astreobot-plugin-telegram-bot.git#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "husky": "^2.4.1",
+    "mocha": "^5.2.0",
+    "nodemon": "^2.0.7",
+    "nyc": "^13.1.0",
+    "sinon": "^7.3.2"
+  },
+  "files": [
+    "lib/"
+  ],
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1022.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
