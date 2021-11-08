@@ -24,8 +24,6 @@ app.post('/restart-instance', async (req, res) => {
 
 	const { instanceId, hash } = req.body;
 	console.log('body:', req.body);
-	logger.info(req.body);
-	logger.info(process.env)
 
 	if(!process.env.HASH || process.env.HASH !== hash)
 		return res.status(403).send('Invalid credentials');
@@ -33,16 +31,20 @@ app.post('/restart-instance', async (req, res) => {
 	if(!instanceId)
 		return res.status(400).send('You most send the instanceId');
 
+	logger.info('sin errores');
 	// Create EC2 service object
 	var ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
+	logger.info(ec2);
 
 	var params = {
 		InstanceIds: [instanceId],
 		DryRun: true
 	};
-
+	logger.info(params);
 	// Call EC2 to reboot instances
 	ec2.rebootInstances(params, function(err, data) {
+		console.log('err:', err);
+		console.log('data:', data);
 		if(err && err.code === 'DryRunOperation') {
 			logger.info(params);
 			params.DryRun = false;
