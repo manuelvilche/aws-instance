@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 app.post('/restart-instance', async (req, res) => {
 
 	const { instanceId, hash } = req.body;
-
+	console.log('body:', body);
 	logger.info(body);
 
 	if(!process.env.HASH || process.env.HASH !== hash)
