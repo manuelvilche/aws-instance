@@ -8,7 +8,7 @@ const logger = require('lllog')();
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Set the region
-// AWS.config.update({region: 'REGION'});
+AWS.config.update({region: process.env.AWS_DEFAULT_REGION || 'us-east-1'});
 
 const packageInfo = require('./package.json');
 
@@ -24,7 +24,7 @@ app.post('/restart-instance', async (req, res) => {
 
 	const { instanceId, hash } = req.body;
 	console.log('body:', req.body);
-	console.log('process.env.HASH:', process.env.HASH);
+
 	if(!process.env.HASH || process.env.HASH !== hash)
 		return res.status(403).send('Invalid credentials');
 
@@ -37,9 +37,9 @@ app.post('/restart-instance', async (req, res) => {
 	logger.info(ec2);
 
 	var params = {
-		InstanceIds: [instanceId],
-		DryRun: true
+		InstanceIds: [instanceId]
 	};
+
 	logger.info(params);
 	// Call EC2 to reboot instances
 	ec2.rebootInstances(params, function(err, data) {
