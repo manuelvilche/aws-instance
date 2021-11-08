@@ -3,6 +3,7 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
+const logger = require('lllog')();
 
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
@@ -21,9 +22,9 @@ app.get('/', (req, res) => {
 
 app.post('/restart-instance', async (req, res) => {
 
-	const { body } = req;
+	const { instanceId, hash } = req.body;
 
-	const { instanceId, hash } = body;
+	logger.info(body);
 
 	if(!process.env.HASH || process.env.HASH !== hash)
 		return res.status(403).send('Invalid credentials');
@@ -42,12 +43,14 @@ app.post('/restart-instance', async (req, res) => {
 	// Call EC2 to reboot instances
 	ec2.rebootInstances(params, function(err, data) {
 		if(err && err.code === 'DryRunOperation') {
+			logger.info(params);
 			params.DryRun = false;
 			ec2.rebootInstances(params, function(err, data) {
+				logger.info(data);
 				if(err)
 					console.log("Error", err);
 				else if (data) {
-					console.log('data:', data);
+					logger.info('data:', data);
 					res.json(`instanceId: ${instanceId} restarted`);
 				}
 
