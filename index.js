@@ -43,11 +43,12 @@ app.post('/restart-instance', async (req, res) => {
 	logger.info(params);
 	// Call EC2 to reboot instances
 	ec2.rebootInstances(params, function(err, data) {
+		console.log('Arrannco con el rebootInstances');
 		console.log('err:', err);
 		console.log('data:', data);
-		if(err && err.code === 'DryRunOperation') {
-			logger.info(params);
-			params.DryRun = false;
+		// if(err && err.code === 'DryRunOperation') {
+		// 	logger.info(params);
+		// 	params.DryRun = false;
 			ec2.rebootInstances(params, function(err, data) {
 				logger.info(data);
 				if(err)
@@ -58,8 +59,8 @@ app.post('/restart-instance', async (req, res) => {
 				}
 
 			});
-		} else
-			console.log("You don't have permission to reboot instances.");
+		// } else
+		// 	console.log("You don't have permission to reboot instances.");
 	});
 
 
